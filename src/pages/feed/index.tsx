@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
-import { Sidebar, SearchInput, Story, Button, ProfileCard } from "@/components";
+import Sidebar from "@/components/Sidebar";
+import { SearchInput, Story, Button, ProfileCard } from "@/components";
 import { useGlobalContext } from "../../../context/context";
 import { storyItems } from "@/data";
 import { NextIcon, EditIcon, PostIcon } from "@/components/icons";
