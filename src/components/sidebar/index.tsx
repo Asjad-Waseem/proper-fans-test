@@ -1,4 +1,3 @@
-"use client";
 import clsx from "clsx";
 import React, { useState } from "react";
 import MenuIcon from "../icons/Menu";
