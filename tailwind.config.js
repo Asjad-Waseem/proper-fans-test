@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -7,6 +8,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: { sm: { max: "1199px" }, lg: { min: "1200px" } },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -17,6 +19,10 @@ module.exports = {
       },
       boxShadow: {
         sidebar: "4px 0px 10px 0px rgba(0, 0, 0, 0.04)",
+      },
+      colors: {
+        "neutral-grey": "var(--neutral-700, #999)",
+        "hover-item": "rgba(0, 0, 0, 1)",
       },
     },
   },

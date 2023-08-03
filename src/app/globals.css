@@ -1,3 +1,70 @@
 @tailwind base;
 @tailwind components;
+
+.options-btn {
+  height: 46px;
+  width: 240px;
+  padding: 10px;
+  border: 1px solid var(--opacity-black-6, rgba(0, 0, 0, 0.06));
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.02);
+  gap: 6px;
+  margin-top: 21px;
+}
+
+.search-input {
+  display: flex;
+  height: 46px;
+  padding: 11px 20px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid var(--opacity-black-6, rgba(0, 0, 0, 0.06));
+  background: var(--default-white, #fff);
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.02);
+}
+
+.new-post-btn {
+  padding: 10px;
+  gap: 6px;
+  background: var(
+    --gradients-primary,
+    linear-gradient(178deg, #fd8ddd 0%, #8958e1 100%)
+  );
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
+}
+
+.suggested-creators {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  height: 311px;
+  border-radius: 10px;
+  border: 1px solid var(--opacity-black-4, rgba(0, 0, 0, 0.04));
+  background: var(--opacity-black-2, rgba(0, 0, 0, 0.02));
+  box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.02);
+  padding-left: 20px;
+}
+
 @tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

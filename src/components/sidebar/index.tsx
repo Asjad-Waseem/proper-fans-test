@@ -1,46 +1,27 @@
 "use client";
 import clsx from "clsx";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import MenuIcon from "../icons/Menu";
-import { menuItems } from "../../data/menuItems";
+import LogoIcon from "../icons/Logo";
+import { menuItems, subscribers } from "../../data";
+import NavItem from "../NavItem";
+import ProfileCard from "../ProfileCard";
+import Button from "../Button";
+
+import { useGlobalContext } from "../../../context/context";
+import { actionTypes } from "../../../context/reducer";
 
 const Sidebar = () => {
   const [toggleCollapse, setToggleCollapse] = useState(false);
-  const [isCollapsible, setIsCollapsible] = useState(false);
-
-  // const router = useRouter();
-
-  // const activeMenu = useMemo(
-  //   () => menuItems.find((menu) => menu.link === router.pathname),
-  //   [router.pathname]
-  // );
-
-  // const activeMenu = useMemo(
-  //   () => menuItems.find((menu) => menu.link === router.location.pathname),
-  //   [router.location.pathname]
-  // );
-
-  // const activeMenu = useMemo(
-  //   () => menuItems.find((menu) => menu.link === useLocation().pathname),
-  //   [useLocation().pathname]
-  // );
+  const [{ toggleSidebar }, dispatch] = useGlobalContext();
 
   const activeMenu = { id: 0 };
 
   const wrapperClasses = clsx(
-    "h-screen bg-white shadow-sidebar px-4 pt-8 pb-4 bg-light flex justify-between flex-col",
+    "fixed h-screen bg-white shadow-sidebar px-4 pt-10 pb-10 bg-light flex justify-between flex-col",
     {
-      ["w-280px"]: !toggleCollapse,
-      ["w-20"]: toggleCollapse,
-    }
-  );
-
-  const collapseIconClasses = clsx(
-    "p-4 rounded bg-light-lighter absolute right-0",
-    {
-      "rotate-180": toggleCollapse,
+      ["w-280px overflow-y-scroll overflow-x-hidden"]: !toggleCollapse,
+      ["w-16"]: toggleCollapse,
     }
   );
 
@@ -53,77 +34,106 @@ const Sidebar = () => {
     );
   };
 
-  const onMouseOver = () => {
-    setIsCollapsible(!isCollapsible);
-  };
-
   const handleSidebarToggle = () => {
     setToggleCollapse(!toggleCollapse);
+    dispatch({
+      type: actionTypes.TOGGLE_SIDEBAR,
+      toggleSidebar: !toggleCollapse,
+    });
   };
 
   return (
     <div
       className={wrapperClasses}
-      // onMouseEnter={onMouseOver}
-      // onMouseLeave={onMouseOver}
       style={{ transition: "width 300ms cubic-bezier(0.2, 0, 0, 1) 0s" }}
     >
       <div className="flex flex-col">
         <div className="flex items-center justify-between relative">
-          <div className="flex flex-row items-center pl-1 gap-4">
-            {isCollapsible && (
-              <button
-                className={collapseIconClasses}
-                onClick={handleSidebarToggle}
-              >
-                <MenuIcon />
-              </button>
+          <NavItem
+            key="01"
+            classes={clsx(
+              "flex flex-row items-center",
+              !toggleCollapse ? "pl-1" : "ml-[-7px]"
             )}
-            <span
-              className={clsx("mt-2 text-lg font-medium text-text", {
-                hidden: toggleCollapse,
-              })}
-            >
-              Logo
-            </span>
-          </div>
+            hrefLink="/"
+            itemType="mainNavItem"
+            itemName="other"
+            handleToggle={handleSidebarToggle}
+            icon={<MenuIcon />}
+            icon2={<LogoIcon />}
+            toggleCollapse={toggleCollapse}
+          />
         </div>
 
-        <div className="flex flex-col items-start mt-24">
+        {!toggleCollapse && (
+          <p
+            className={clsx(
+              "text-sm font-normal text-neutral-grey mt-[30px] mb-6 ml-[4px]"
+            )}
+          >
+            Menu
+          </p>
+        )}
+        <div className="flex flex-col items-start ml-[-6px]">
           {menuItems.map(({ icon: Icon, ...menu }, index) => {
             const classes = getNavItemClasses(menu);
+            const { itemName, link, label } = menu;
             return (
-              <div className={classes} key={index}>
-                <Link
-                  className="flex py-4 px-3 items-center w-full h-full"
-                  href={menu.link}
-                >
-                  <div style={{ width: "2.5rem" }}>
-                    <MenuIcon />
-                  </div>
-                  {!toggleCollapse && (
-                    <span
-                      className={clsx("text-md font-medium text-text-light")}
-                    >
-                      {menu.label}
-                    </span>
-                  )}
-                </Link>
-              </div>
+              <NavItem
+                key={index}
+                itemType="regularNavItem"
+                itemName={itemName}
+                classes={classes}
+                index={index}
+                hrefLink={link}
+                icon={Icon}
+                toggleCollapse={toggleCollapse}
+                label={label}
+              />
             );
           })}
         </div>
-      </div>
-
-      <div className={`${getNavItemClasses({})} px-3 py-4`}>
-        <div style={{ width: "2.5rem" }}>
-          <MenuIcon />
-        </div>
         {!toggleCollapse && (
-          <span className={clsx("text-md font-medium text-text-light")}>
-            Logout
-          </span>
+          <p
+            className={clsx(
+              "text-sm font-normal text-neutral-grey mt-[30px] mb-6 ml-[4px]"
+            )}
+          >
+            Subscriptions
+          </p>
         )}
+        {subscribers.map((subscriber, index) => {
+          const { link, src, fullName, userName } = subscriber;
+          return (
+            <ProfileCard
+              key={index}
+              index={index}
+              hrefLink={link}
+              src={src}
+              fullName={fullName}
+              userName={userName}
+              showCompleteDetails={!toggleCollapse ? true : false}
+              showVerifiedIcon={true}
+            />
+          );
+        })}
+
+        <div className="mt-[242px]">
+          <ProfileCard
+            hrefLink="/"
+            src="/Avatar3.png"
+            fullName="Real Cnosi"
+            userName="via Ľubomír Csicsai"
+            showCompleteDetails={!toggleCollapse ? true : false}
+            showVerifiedIcon={false}
+          />
+          <Button
+            className="options-btn"
+            showIcon={false}
+            textClassName="text-base text-[#999999]"
+            text="Options"
+          />
+        </div>
       </div>
     </div>
   );

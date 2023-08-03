@@ -1,9 +1,44 @@
-import MenuIcon from "../../components/icons/Menu";
+import {
+  FeedIcon,
+  DiscoverIcon,
+  ProperChatIcon,
+  InboxIcon,
+  ProfileIcon,
+  AccountCenterIcon,
+} from "@/components/icons";
 import { MenuItemsI } from "./types";
 
-export const menuItems: MenuItemsI[] = [
-  { id: 1, label: "Home", icon: <MenuIcon />, link: "/" },
-  { id: 2, label: "Manage Posts", icon: <MenuIcon />, link: "/posts" },
-  { id: 3, label: "Manage Users", icon: <MenuIcon />, link: "/users" },
-  { id: 4, label: "Manage Tutorials", icon: <MenuIcon />, link: "/tutorials" },
+const menuItems: MenuItemsI[] = [
+  { id: 1, itemName: "other", label: "Feed", icon: <FeedIcon />, link: "/" },
+  {
+    id: 2,
+    itemName: "other",
+    label: "Discover",
+    icon: <DiscoverIcon />,
+    link: "/",
+  },
+  {
+    id: 3,
+    itemName: "properChat",
+    label: "Properchat",
+    icon: <ProperChatIcon />,
+    link: "/",
+  },
+  { id: 4, itemName: "other", label: "Inbox", icon: <InboxIcon />, link: "/" },
+  {
+    id: 5,
+    itemName: "other",
+    label: "Profile",
+    icon: <ProfileIcon />,
+    link: "/",
+  },
+  {
+    id: 6,
+    itemName: "accountCenter",
+    label: "Account Center",
+    icon: <AccountCenterIcon />,
+    link: "/",
+  },
 ];
+
+export default menuItems;
